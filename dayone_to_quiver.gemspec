@@ -34,6 +34,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "timecop", "~> 0.9.1"
 
   spec.add_dependency "thor", "~> 0.19.4"
-  spec.add_dependency "dayone_toolbox", "~> 0.1.0"
-  spec.add_dependency "quiver_toolbox", "~> 0.1.0"
+  spec.add_dependency "dayone_toolbox", "~> 0.2.0"
+  spec.add_dependency "quiver_toolbox", "~> 0.2.0"
 end

@@ -14,7 +14,9 @@ class DayoneToQuiver::API::DayoneEntryToQuiverNote
     @entry = ::DayoneToQuiver::DayoneEntry.new(@input_file)
     @note = ::QuiverToolbox::Note.new(@entry.to_quiver_hash)
     @note.notebook_path = @output_path
-    @result = @note.file_name_with_path if @note.store
+
+    @converter = ::DayoneToQuiver::Converter.new(@entry, @note)
+    @result = @converter.note.file_name_with_path if @converter.store
     self
   end
 end
@@ -37,8 +39,11 @@ class DayoneToQuiver::API::DayoneJournalToQuiverNotebook
   def exec
     @notebook.store
     @journal.entries.each do |entry|
-      note = @notebook.build_note(::DayoneToQuiver::DayoneEntry.new(entry).to_quiver_hash)
-      @result << "#{note.file_name_with_path}\n" if note.store
+      entry_obj = ::DayoneToQuiver::DayoneEntry.new(entry)
+      note = @notebook.build_note(entry_obj.to_quiver_hash)
+      converter = ::DayoneToQuiver::Converter.new(entry_obj, note)
+
+      @result << "#{converter.note.file_name_with_path}\n" if converter.store
     end
     self
   end
